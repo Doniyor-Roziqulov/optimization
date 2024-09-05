@@ -2,11 +2,13 @@ import axios from "@/api";
 import React, { memo, useEffect, useState } from "react";
 import { Button } from "antd";
 import Create from "../create/Create";
+import { useSelector } from "react-redux";
 
 const Blogs = () => {
     const [data, setData] = useState(null);
     const [show, setShow] = useState(false);
     const [reload, setReload] = useState(false);
+    const profile = useSelector((state) => state.profile);
 
     const handleCreate = (value) => {
         let blog = {
@@ -21,7 +23,6 @@ const Blogs = () => {
             })
             .finally(() => setShow(false));
     };
-
     useEffect(() => {
         axios
             .get("/blogs", { params: { limit: 12 } })
@@ -41,12 +42,21 @@ const Blogs = () => {
             </h3>
             <p className="text-center italic text-white">{blog.desc}</p>
             <p className="text-lg text-white">Creator: {blog.userId.fname}</p>
-            <button
-                className="bg-slate-900 border rounded-lg py-1 text-red-600 px-3"
-                danger
-                onClick={() => handleDelete(blog._id)}>
-                Delete
-            </button>
+            {profile?._id === blog.userId._id && (
+                <div>
+                    <button
+                        className="bg-slate-900 border rounded-lg py-1 text-red-600 px-3"
+                        danger
+                        onClick={() => handleDelete(blog._id)}>
+                        Delete
+                    </button>
+                    <Button
+                        className="bg-stone-800 text-white ml-2"
+                        onClick={() => setShow(true)}>
+                        Edit
+                    </Button>
+                </div>
+            )}
         </div>
     ));
     return (

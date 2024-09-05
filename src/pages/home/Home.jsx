@@ -6,15 +6,13 @@ import { useDispatch } from "react-redux";
 
 const Home = () => {
     const dispatch = useDispatch();
+
     useEffect(() => {
-        axios
-            .get("/admin/profile")
-            .then((res) => {
-                console.log(res.data.payload);
-                dispatch({ type: "SET_PROFILE", payload: res.data.payload });
-            })
-            .catch((err) => console.log(err));
+        axios.get("/admin/profile").then((res) => {
+            dispatch({ type: "SET_PROFILE", payload: res.data.payload });
+        });
     }, []);
+
     return (
         <div>
             <div className="container mx-auto px-14 pt-4 pb-4 flex justify-end">

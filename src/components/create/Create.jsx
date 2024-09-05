@@ -3,9 +3,6 @@ import Modal from "../model/Modal";
 import { Button, Form, Input } from "antd";
 
 const Create = ({ show, setShow, handleCreate }) => {
-    // const onFinish = (values) => {
-    //     setShow(false);
-    // };
     const onFinishFailed = (errorInfo) => {
         console.log("Failed:", errorInfo);
     };
